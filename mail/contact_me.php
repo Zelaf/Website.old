@@ -23,7 +23,7 @@ $reply_to = $email_address;
 $email_subject = "Website Contact Form:  $name";
 $email_body = "You have received a new message from your website contact form.\n\n"."Here are the details:\n\nName: $name\n\nEmail: $email_address\n\nPhone: $phone\n\nMessage:\n$message";
 
-$mailgun_domain = ''; // should look like samples.mailgun.org or like mg.ardao.me (not necessarily the domain but the subdomain you configured mailgun on)
+$mailgun_domain = 'noreply.zelaf.eu'; // should look like samples.mailgun.org or like mg.ardao.me (not necessarily the domain but the subdomain you configured mailgun on)
 $mailgun_smtp_password = '';
 
 $mail = new PHPMailer;
