@@ -20,7 +20,7 @@ $to = 'zelaf@zelaf.eu'; // Add your email address inbetween the '' replacing you
 $reply_to = $email_address;
 $email_subject = "Website Contact Form:  $name";
 $email_body = "You have received a new message from your website contact form.\n\n"."Here are the details:\n\nName: $name\n\nEmail: $email_address\n\nPhone: $phone\n\nMessage:\n$message";
-$email_html_body = "<html>You have recieved an email from your websites contact form. <br>Name: $name <br>Email: $email_address <br>Message: $message</html>";
+$email_html_body = "<html>You have recieved an email from your websites contact form. <br><b>Name:</b> $name <br><b>Email:</b> $email_address <br><b>Message:</b> $message</html>";
 
 $mailgun_domain = 'noreply.zelaf.eu'; // should look like samples.mailgun.org or like mg.ardao.me (not necessarily the domain but the subdomain you configured mailgun on)
 $mailgun_smtp_password = '';
