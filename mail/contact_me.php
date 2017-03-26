@@ -1,4 +1,5 @@
 <?php
+require 'PHPMailerAutoload.php';
 // Check for empty fields
 if(empty($_POST['name'])  		||
    empty($_POST['email']) 		||
@@ -23,19 +24,30 @@ $email_subject = "Website Contact Form:  $name";
 $email_body = "You have received a new message from your website contact form.\n\n"."Here are the details:\n\nName: $name\n\nEmail: $email_address\n\nPhone: $phone\n\nMessage:\n$message";
 
 $mailgun_domain = ''; // should look like samples.mailgun.org or like mg.ardao.me (not necessarily the domain but the subdomain you configured mailgun on)
-$mailgun_apikey = ''; // should look like api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0
+$mailgun_smtp_password = '';
 
-$ch = curl_init();
+$mail = new PHPMailer;
 
-curl_setopt($ch, CURLOPT_URL,"https://api.mailgun.net/v3/$mailgun_domain/messages");
-curl_setopt($ch, CURLOPT_USERPWD, "");
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('from' => $from, 'to' => $to, 'h:Reply-To' => $reply_to, 'subject' => $email_subject, 'text' => $email_body)));
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$mail->isSMTP();
+$mail->Host = 'smtp.mailgun.org';
+$mail->SMTPAuth = true;
+$mail->Username = 'postmaster@'.$mailgun_domain;
+$mail->Password = $mailgun_smtp_password;
+$mail->SMTPSecure = 'tls';
+$mail->Port = 587;     
+$mail->setFrom($from, $name);
+$mail->addAddress($to);
+$mail->addReplyTo($reply_to);
+$mail->Subject = $email_subject;
+$mail->Body = $email_body;
+$mail->AltBody = $email_body;
 
-$server_output = curl_exec ($ch);
-
-curl_close ($ch);
+if(!$mail->send()) {
+    echo 'Message could not be sent.';
+    echo 'Mailer Error: ' . $mail->ErrorInfo;
+} else {
+    echo 'Message has been sent';
+}
 
 return true;
 ?>
